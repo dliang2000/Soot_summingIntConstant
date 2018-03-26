@@ -6,9 +6,7 @@ import soot.util.*;
 import java.util.*;
 
 public class SummingIntConstantInstrumenter extends BodyTransformer {
-
-	Local l = null;
-
+	public int intConstantSum = 0;
 	@Override
 	protected void internalTransform(Body body, String phase, Map options) {
 		// body's method
@@ -17,7 +15,7 @@ public class SummingIntConstantInstrumenter extends BodyTransformer {
 		// debugging
 		System.out.println("instrumenting method : " + method.getSignature());
 		ArrayList<IntConstant> intConstantList = getIntConstantCandidates(body);
-		int intConstantSum = sumIntConstant(intConstantList);
+		intConstantSum = sumIntConstant(intConstantList);
 		System.out.println("The sum of all the IntConstants within the method is: " + intConstantSum);
 	}
 
