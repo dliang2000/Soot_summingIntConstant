@@ -6,7 +6,9 @@ import soot.util.*;
 import java.util.*;
 
 public class SummingIntConstantInstrumenter extends BodyTransformer {
+
 	public int intConstantSum = 0;
+
 	@Override
 	protected void internalTransform(Body body, String phase, Map options) {
 		// body's method
@@ -21,32 +23,25 @@ public class SummingIntConstantInstrumenter extends BodyTransformer {
 
 	private ArrayList<IntConstant> getIntConstantCandidates(Body body) {
 		ArrayList<IntConstant> intConstantList = new ArrayList<IntConstant>();
-
 		for (Unit unit : body.getUnits()) {
-			Iterator ubIt = unit.getUseAndDefBoxes().iterator();
-			while (ubIt.hasNext()) {
-				ValueBox vb = (ValueBox) ubIt.next();
+			@SuppressWarnings("unchecked")
+			List<ValueBox> vbs = unit.getUseAndDefBoxes();
+			
+			for (ValueBox vb: vbs) {
 				Value v = vb.getValue();
-				if (v instanceof BinopExpr) {
-					BinopExpr be = (BinopExpr) v;
-					Value lo = be.getOp1(), ro = be.getOp2();
-					if (lo instanceof IntConstant) {
-						intConstantList.add((IntConstant) lo);
-						System.out.println("IntConstant added: " + lo);
-					}
-					if (ro instanceof IntConstant) {
-						intConstantList.add((IntConstant) ro);
-						System.out.println("IntConstant added: " + ro);
-					}
+				if (v instanceof IntConstant) {
+					intConstantList.add((IntConstant) v);
+					System.out.println("IntConstant added: " + v);
 				}
 			}
+			
 		}
 		return intConstantList;
 	}
-	
+
 	private int sumIntConstant(ArrayList<IntConstant> intConstantList) {
 		int sum = 0;
-		for (IntConstant ic: intConstantList) {
+		for (IntConstant ic : intConstantList) {
 			sum += ic.hashCode();
 		}
 		return sum;
