@@ -6,7 +6,6 @@ import soot.util.*;
 import java.util.*;
 
 public class SummingIntConstantInstrumenter extends BodyTransformer {
-
 	public int intConstantSum = 0;
 
 	@Override
@@ -42,7 +41,7 @@ public class SummingIntConstantInstrumenter extends BodyTransformer {
 	private int sumIntConstant(ArrayList<IntConstant> intConstantList) {
 		int sum = 0;
 		for (IntConstant ic : intConstantList) {
-			sum += ic.hashCode();
+			sum += ic.value;
 		}
 		return sum;
 	}

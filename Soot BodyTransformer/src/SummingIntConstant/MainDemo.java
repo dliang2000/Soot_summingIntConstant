@@ -8,11 +8,7 @@ import java.io.*;
 import java.util.*;
 
 public class MainDemo {
-	   public static void main(String[] args) {
-		   /*Options.v().set_whole_program(true);
-		   Options.v().parse(args);*/
-		  
-		   
+	   public static void main(String[] args) {		   
 		   SootClass c = Scene.v().forceResolve("SummingIntConstant.Test", SootClass.BODIES);
 		   c.setApplicationClass();
 		   Scene.v().loadNecessaryClasses();
